@@ -1,5 +1,6 @@
 package com.blogging.springboot.services;
 
+import com.blogging.springboot.exceptions.NotFoundException;
 import com.blogging.springboot.models.Comment;
 import com.blogging.springboot.repositories.CommentRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,7 +25,7 @@ public class CommentServiceImpl implements  CommentService {
 	@Override
 	public Comment show(Long id) {
 		return commentRepo.findById(id).orElseThrow(
-						() -> new EntityNotFoundException("Not Found !!!"));
+						() -> new NotFoundException("Commentaire", id));
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class CommentServiceImpl implements  CommentService {
 	@Override
 	public Comment update(Comment comment, Long id) {
 		commentRepo.findById(id).orElseThrow(
-						() -> new EntityNotFoundException(String.format("Le commentaire d'id %d n'a pas ete trouve", id)));
+						() -> new NotFoundException("Commentaire", id));
 		comment.setId(id);
 		return commentRepo.save(comment);
 	}

@@ -16,4 +16,6 @@ public interface MediaService {
 	Media update(Media media, Long id);
 
 	ResponseEntity<?> delete(Long id);
+
+	ResponseEntity<byte[]> getImage(Long mediaId);
 }

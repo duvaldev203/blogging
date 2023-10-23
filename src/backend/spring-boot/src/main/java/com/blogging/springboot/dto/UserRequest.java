@@ -21,4 +21,6 @@ public class UserRequest {
 	private String phone;
 
 	private List<RoleResponse> roles;
+
+	private ProfileResponse profile;
 }

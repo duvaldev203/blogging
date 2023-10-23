@@ -1,8 +1,11 @@
 package com.blogging.springboot.controllers;
 
+import com.blogging.springboot.dto.ArticleResponse;
+import com.blogging.springboot.dto.TagRequest;
 import com.blogging.springboot.dto.TagResponse;
 import com.blogging.springboot.models.Tag;
 import com.blogging.springboot.services.TagService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,17 +42,24 @@ public class TagController {
 	}
 
 	@PostMapping
-	ResponseEntity<TagResponse> create(@RequestBody Tag tag){
+	ResponseEntity<TagResponse> create(@RequestBody @Valid TagRequest tag){
 		Tag req = modelMapper.map(tag, Tag.class);
 		TagResponse resp = modelMapper.map(tagService.create(req), TagResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	ResponseEntity<TagResponse> update(@PathVariable Long id, @RequestBody Tag tag){
+	ResponseEntity<TagResponse> update(@PathVariable Long id, @RequestBody @Valid TagRequest tag){
 		Tag req = modelMapper.map(tag, Tag.class);
 		TagResponse resp = modelMapper.map(tagService.update(req, id), TagResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.ACCEPTED);
+	}
+
+	@GetMapping("/records/{keywords}")
+	public ResponseEntity<List<TagResponse>> recods(@PathVariable String keywords){
+		List<Tag> articles = tagService.records(keywords);
+		List<TagResponse> resp = articles.stream().map(el -> modelMapper.map(el, TagResponse.class)).toList();
+		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 
 }

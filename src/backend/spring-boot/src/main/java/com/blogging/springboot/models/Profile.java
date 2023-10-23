@@ -1,30 +1,23 @@
 package com.blogging.springboot.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 
-@Data
 @Entity
-@Table(name = "comments")
-public class Comment {
-
+@Data
+@Table(name = "profiles")
+public class Profile {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull(message = "Le contenu de l'article est obligatoire !!!")
-	private String content;
+	private String nomImg;
 
-	@ManyToOne
-	private Article article;
-
-	@OneToOne
-	@JoinColumn(name = "user_id")
+	@OneToOne(mappedBy = "profile", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
 	private User user;
 
 	@CreationTimestamp

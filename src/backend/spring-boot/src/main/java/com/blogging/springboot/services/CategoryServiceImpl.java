@@ -1,5 +1,6 @@
 package com.blogging.springboot.services;
 
+import com.blogging.springboot.exceptions.NotFoundException;
 import com.blogging.springboot.models.Category;
 import com.blogging.springboot.repositories.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,7 +25,7 @@ public class CategoryServiceImpl implements  CategoryService {
 	@Override
 	public Category show(Long id) {
 		return categoryRepo.findById(id).orElseThrow(
-						() -> new EntityNotFoundException("Not Found !!!"));
+						() -> new NotFoundException("Categorie", id));
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class CategoryServiceImpl implements  CategoryService {
 	@Override
 	public Category update(Category category, Long id) {
 		categoryRepo.findById(id).orElseThrow(
-						() -> new EntityNotFoundException(String.format("La categorie d'id %d n'a pas ete trouve", id)));
+						() -> new NotFoundException("Categorie", id));
 		category.setId(id);
 		return categoryRepo.save(category);
 	}

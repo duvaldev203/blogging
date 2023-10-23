@@ -1,8 +1,8 @@
 package com.blogging.springboot.services;
 
+import com.blogging.springboot.exceptions.NotFoundException;
 import com.blogging.springboot.models.Tag;
 import com.blogging.springboot.repositories.TagRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class TagServiceImpl implements  TagService {
 	@Override
 	public Tag show(Long id) {
 		return tagRepo.findById(id).orElseThrow(
-						() -> new EntityNotFoundException("Not Found !!!"));
+						() -> new NotFoundException("Tag", id));
 	}
 
 	@Override
@@ -35,9 +35,14 @@ public class TagServiceImpl implements  TagService {
 	@Override
 	public Tag update(Tag tag, Long id) {
 		tagRepo.findById(id).orElseThrow(
-						() -> new EntityNotFoundException(String.format("tag d'id %d n'a pas ete trouve", id)));
+						() -> new NotFoundException("Tag", id));
 		tag.setId(id);
 		return tagRepo.save(tag);
+	}
+
+	@Override
+	public List<Tag> records(String keywords) {
+		return tagRepo.findByNameContaining(keywords);
 	}
 
 }

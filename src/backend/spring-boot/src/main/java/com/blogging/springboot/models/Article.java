@@ -1,6 +1,7 @@
 package com.blogging.springboot.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,14 +18,18 @@ public class Article {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull(message = "Le champ title ne doit pas etre vide !!!")
 	private String title;
 
+//	@NotNull(message = "La couverture de l'article  est obligatoire !!!")
 	private String cover;
 
+	@NotNull(message = "Le contenu de l'article ne doit pas etre vide !!!")
 	private String content;
 
 	private int totalViews;
 
+	@NotNull(message = "Le champ contenant le nombre d'heure de lecture est obligatoire !!!")
 	private int readingTime;
 
 	@ManyToOne

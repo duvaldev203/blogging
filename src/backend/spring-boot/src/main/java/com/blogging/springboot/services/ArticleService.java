@@ -1,7 +1,5 @@
 package com.blogging.springboot.services;
 
-import com.blogging.springboot.dto.ArticleRequest;
-import com.blogging.springboot.dto.ArticleResponse;
 import com.blogging.springboot.models.Article;
 import org.springframework.http.ResponseEntity;
 
@@ -17,4 +15,8 @@ public interface ArticleService {
 	Article update(Article article, Long id);
 
 	ResponseEntity<?> delete(Long id);
+
+	Article readOne(Long id);
+
+	ResponseEntity<byte[]> getCover(Long articleId);
 }
