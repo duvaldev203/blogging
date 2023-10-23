@@ -25,6 +25,8 @@ public class UserResponse {
 
 	private List<RoleResponse> roles;
 
+	private ProfileResponse profile;
+
 	private Timestamp createdAt;
 
 	private Timestamp updatedAt;

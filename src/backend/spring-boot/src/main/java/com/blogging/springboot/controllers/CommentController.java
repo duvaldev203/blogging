@@ -1,8 +1,10 @@
 package com.blogging.springboot.controllers;
 
+import com.blogging.springboot.dto.CommentRequest;
 import com.blogging.springboot.dto.CommentResponse;
 import com.blogging.springboot.models.Comment;
 import com.blogging.springboot.services.CommentService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,14 +41,14 @@ public class CommentController {
 	}
 
 	@PostMapping
-	ResponseEntity<CommentResponse> create(@RequestBody Comment comment){
+	ResponseEntity<CommentResponse> create(@RequestBody @Valid CommentRequest comment){
 		Comment req = modelMapper.map(comment, Comment.class);
 		CommentResponse resp = modelMapper.map(commentService.create(req), CommentResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	ResponseEntity<CommentResponse> update(@PathVariable Long id, @RequestBody Comment comment){
+	ResponseEntity<CommentResponse> update(@PathVariable Long id, @RequestBody @Valid CommentRequest comment){
 		Comment req = modelMapper.map(comment, Comment.class);
 		CommentResponse resp = modelMapper.map(commentService.update(req, id), CommentResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.ACCEPTED);

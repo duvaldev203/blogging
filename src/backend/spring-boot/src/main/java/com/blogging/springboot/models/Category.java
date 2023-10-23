@@ -1,6 +1,7 @@
 package com.blogging.springboot.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,8 +18,10 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull(message = "Le champ nom ne doit pas etre vide !!!")
 	private String name;
 
+	@NotNull(message = "La description de la categorie est obligatoire !!!")
 	private String description;
 
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)

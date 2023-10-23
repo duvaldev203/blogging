@@ -1,8 +1,10 @@
 package com.blogging.springboot.controllers;
 
+import com.blogging.springboot.dto.RoleRequest;
 import com.blogging.springboot.dto.RoleResponse;
 import com.blogging.springboot.models.Role;
 import com.blogging.springboot.services.RoleService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,14 +41,14 @@ public class RoleController {
 	}
 
 	@PostMapping
-	ResponseEntity<RoleResponse> create(@RequestBody Role role){
+	ResponseEntity<RoleResponse> create(@RequestBody @Valid RoleRequest role){
 		Role req = modelMapper.map(role, Role.class);
 		RoleResponse resp = modelMapper.map(roleService.create(req), RoleResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	ResponseEntity<RoleResponse> update(@PathVariable Long id, @RequestBody Role role){
+	ResponseEntity<RoleResponse> update(@PathVariable Long id, @RequestBody @Valid RoleRequest role){
 		Role req = modelMapper.map(role, Role.class);
 		RoleResponse resp = modelMapper.map(roleService.update(req, id), RoleResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.ACCEPTED);

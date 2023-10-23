@@ -1,5 +1,6 @@
 package com.blogging.springboot.services;
 
+import com.blogging.springboot.exceptions.NotFoundException;
 import com.blogging.springboot.models.User;
 import com.blogging.springboot.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,7 +25,7 @@ public class UserServiceImpl implements  UserService {
 	@Override
 	public User show(Long id) {
 		return userRepo.findById(id).orElseThrow(
-						() -> new EntityNotFoundException("Not Found !!!"));
+						() -> new NotFoundException("utilisateur", id));
 	}
 
 	@Override
@@ -34,9 +35,10 @@ public class UserServiceImpl implements  UserService {
 
 	@Override
 	public User update(User user, Long id) {
-		userRepo.findById(id).orElseThrow(
-						() -> new EntityNotFoundException(String.format("Le user d'id %d n'a pas ete trouve", id)));
+		User old = userRepo.findById(id).orElseThrow(
+						() -> new NotFoundException("utilisateur", id));
 		user.setId(id);
+		user.setProfile(old.getProfile());
 		return userRepo.save(user);
 	}
 

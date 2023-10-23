@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MediaRequest {
+public class ProfileRequest {
 
-	private String title;
-
-	private String description;
+	private String nomImg;
 
 }

@@ -1,5 +1,6 @@
 package com.blogging.springboot.services;
 
+import com.blogging.springboot.exceptions.NotFoundException;
 import com.blogging.springboot.models.Reaction;
 import com.blogging.springboot.repositories.ReactionRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,7 +26,7 @@ public class ReactionServiceImpl implements  ReactionService {
 	@Override
 	public Reaction show(Long id) {
 		return reactionRepo.findById(id).orElseThrow(
-						() -> new EntityNotFoundException("Not Found !!!"));
+						() -> new NotFoundException("Reaction", id));
 	}
 
 	@Override
@@ -36,7 +37,7 @@ public class ReactionServiceImpl implements  ReactionService {
 	@Override
 	public Reaction update(Reaction reaction, Long id) {
 		reactionRepo.findById(id).orElseThrow(
-						() -> new EntityNotFoundException(String.format("La reaction d'id %d n'a pas ete trouve", id)));
+						() -> new NotFoundException("Reaction", id));
 		reaction.setId(id);
 		return reactionRepo.save(reaction);
 	}
@@ -44,7 +45,7 @@ public class ReactionServiceImpl implements  ReactionService {
 	@Override
 	public ResponseEntity<?> delete(Long id) {
 		Reaction reaction = reactionRepo.findById(id).orElseThrow(
-						() -> new EntityNotFoundException(String.format("La reaction d'id %d n'a pas ete trouve", id)));
+						() -> new NotFoundException("Reaction", id));
 		reactionRepo.delete(reaction);
 		return ResponseEntity.noContent().build();
 	}

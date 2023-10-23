@@ -1,6 +1,7 @@
 package com.blogging.springboot.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,6 +18,7 @@ public class Tag {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull(message = "Le nom du tag est obligatoire !!!")
 	private String name;
 
 	@ManyToMany(mappedBy = "tags")

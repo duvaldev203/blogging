@@ -1,6 +1,9 @@
 package com.blogging.springboot.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,15 +21,22 @@ public class User {
 	private Long id;
 
 	@Column(name = "first_name")
+	@NotNull(message = "Le nom de l'utilisateur est obligatoire !!!")
 	private String firstName;
 
 	@Column(name = "last_name")
+	@NotNull(message = "Le prenom de l'utilisateur est obligatoire !!!")
 	private String lastName;
 
+	@NotNull(message = "L'email de l'utilisateur est obligatoire !!!")
+	@Email(message = "email invalide !!!")
 	private String email;
 
+	@NotNull(message = "Le mot de passe de l'utilisateur est obligatoire !!!")
 	private String password;
 
+	@NotNull(message = "Le numero de telephone de l'utilisateur est obligatoire !!!")
+	@Pattern(regexp = "^(\\+237|237)?[2368]\\d{8}$", message = "Numéro de téléphone invalide")
 	private String phone;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -45,6 +55,9 @@ public class User {
 	)
 	private List<Role> roles;
 
+	@OneToOne
+	@JoinColumn(name = "profile_id")
+	private Profile profile;
 
 	@CreationTimestamp
 	@Column(name = "created_at", nullable = false, updatable = false)

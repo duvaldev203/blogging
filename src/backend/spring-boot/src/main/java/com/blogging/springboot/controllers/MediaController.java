@@ -1,13 +1,20 @@
 package com.blogging.springboot.controllers;
 
+import com.blogging.springboot.configs.AppConstants;
+import com.blogging.springboot.configs.AppFunctions;
+import com.blogging.springboot.dto.MediaRequest;
 import com.blogging.springboot.dto.MediaResponse;
 import com.blogging.springboot.models.Media;
 import com.blogging.springboot.services.MediaService;
+import com.google.gson.Gson;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,16 +45,30 @@ public class MediaController {
 		return new ResponseEntity<>(media, HttpStatus.FOUND);
 	}
 
-	@PostMapping
-	ResponseEntity<MediaResponse> create(@RequestBody Media media){
-		Media req = modelMapper.map(media, Media.class);
+	@PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+	ResponseEntity<MediaResponse> create(@RequestParam @Valid String media, @RequestParam("file") MultipartFile file){
+//		Media req = modelMapper.map(media, Media.class);
+		Media req = new Gson().fromJson(media, Media.class);
+		req.setType(file.getContentType());
+		req.setUrl(AppFunctions.copyImgToPath(file, AppConstants.DEFAULT_MEDIAS_PATH));
 		MediaResponse resp = modelMapper.map(mediaService.create(req), MediaResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	ResponseEntity<MediaResponse> update(@PathVariable Long id, @RequestBody Media media){
+	ResponseEntity<MediaResponse> update(@PathVariable Long id, @RequestBody @Valid MediaRequest media){
 		Media req = modelMapper.map(media, Media.class);
+		MediaResponse resp = modelMapper.map(mediaService.update(req, id), MediaResponse.class);
+		return new ResponseEntity<>(resp, HttpStatus.ACCEPTED);
+	}
+
+	@PutMapping(value = "/updateMedia/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+	public ResponseEntity<MediaResponse> updateMedia(@PathVariable Long id, @RequestParam @Valid String media, @RequestParam("file") MultipartFile file){
+		Media req = new Gson().fromJson(media, Media.class);
+//		Article req = modelMapper.map(article, Article.class);
+		req.setType(file.getContentType());
+		req.setUrl(AppFunctions.copyImgToPath(file, AppConstants.DEFAULT_MEDIAS_PATH));
+		System.out.println(req);
 		MediaResponse resp = modelMapper.map(mediaService.update(req, id), MediaResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.ACCEPTED);
 	}
@@ -56,4 +77,10 @@ public class MediaController {
 	ResponseEntity<?> delete(@PathVariable Long id){
 		return mediaService.delete(id);
 	}
+
+	@GetMapping("/getImage/{mediaId}")
+	public ResponseEntity<byte[]> getImage(@PathVariable Long mediaId) {
+		return mediaService.getImage(mediaId);
+	}
+
 }

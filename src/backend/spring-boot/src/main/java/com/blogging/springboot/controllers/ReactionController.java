@@ -1,8 +1,10 @@
 package com.blogging.springboot.controllers;
 
+import com.blogging.springboot.dto.ReactionRequest;
 import com.blogging.springboot.dto.ReactionResponse;
 import com.blogging.springboot.models.Reaction;
 import com.blogging.springboot.services.ReactionService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,14 +41,14 @@ public class ReactionController {
 	}
 
 	@PostMapping
-	ResponseEntity<ReactionResponse> create(@RequestBody Reaction reaction){
+	ResponseEntity<ReactionResponse> create(@RequestBody @Valid ReactionRequest reaction){
 		Reaction req = modelMapper.map(reaction, Reaction.class);
 		ReactionResponse resp = modelMapper.map(reactionService.create(req), ReactionResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	ResponseEntity<ReactionResponse> update(@PathVariable Long id, @RequestBody Reaction reaction){
+	ResponseEntity<ReactionResponse> update(@PathVariable Long id, @RequestBody @Valid ReactionRequest reaction){
 		Reaction req = modelMapper.map(reaction, Reaction.class);
 		ReactionResponse resp = modelMapper.map(reactionService.update(req, id), ReactionResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.ACCEPTED);

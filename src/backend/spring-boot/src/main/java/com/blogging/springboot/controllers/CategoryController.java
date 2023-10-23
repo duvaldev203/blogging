@@ -1,8 +1,10 @@
 package com.blogging.springboot.controllers;
 
+import com.blogging.springboot.dto.CategoryRequest;
 import com.blogging.springboot.dto.CategoryResponse;
 import com.blogging.springboot.models.Category;
 import com.blogging.springboot.services.CategoryService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,14 +41,14 @@ public class CategoryController {
 	}
 
 	@PostMapping
-	ResponseEntity<CategoryResponse> create(@RequestBody Category category){
+	ResponseEntity<CategoryResponse> create(@RequestBody @Valid CategoryRequest category){
 		Category req = modelMapper.map(category, Category.class);
 		CategoryResponse resp = modelMapper.map(categoryService.create(req), CategoryResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	ResponseEntity<CategoryResponse> update(@PathVariable Long id, @RequestBody Category category){
+	ResponseEntity<CategoryResponse> update(@PathVariable Long id, @RequestBody @Valid CategoryResponse category){
 		Category req = modelMapper.map(category, Category.class);
 		CategoryResponse resp = modelMapper.map(categoryService.update(req, id), CategoryResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.ACCEPTED);
