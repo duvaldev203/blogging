@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,12 +41,14 @@ public class MediaController {
 	}
 
 	@GetMapping("/{id}")
+	@PreAuthorize("hasAuthority('BLOGGER')")
 	ResponseEntity<MediaResponse> show(@PathVariable Long id){
 		MediaResponse media = modelMapper.map(mediaService.show(id), MediaResponse.class);
 		return new ResponseEntity<>(media, HttpStatus.FOUND);
 	}
 
 	@PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+	@PreAuthorize("hasAuthority('BLOGGER')")
 	ResponseEntity<MediaResponse> create(@RequestParam @Valid String media, @RequestParam("file") MultipartFile file){
 //		Media req = modelMapper.map(media, Media.class);
 		Media req = new Gson().fromJson(media, Media.class);

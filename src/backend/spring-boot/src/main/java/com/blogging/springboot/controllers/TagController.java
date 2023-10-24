@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class TagController {
 	}
 
 	@GetMapping("/{id}")
+	@PreAuthorize("hasAnyAuthority('BLOGGER','ADMIN')")
 	ResponseEntity<TagResponse> show(@PathVariable Long id){
 		TagResponse tag = modelMapper.map(tagService.show(id), TagResponse.class);
 		return new ResponseEntity<>(tag, HttpStatus.FOUND);
@@ -49,6 +51,7 @@ public class TagController {
 	}
 
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAnyAuthority('BLOGGER','ADMIN')")
 	ResponseEntity<TagResponse> update(@PathVariable Long id, @RequestBody @Valid TagRequest tag){
 		Tag req = modelMapper.map(tag, Tag.class);
 		TagResponse resp = modelMapper.map(tagService.update(req, id), TagResponse.class);

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,6 +47,7 @@ public class ArticleController {
 	}
 
 	@PostMapping(value = "/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+	@PreAuthorize("hasAnyAuthority('ADMIN','BLOGGER')")
 	ResponseEntity<ArticleResponse> create(@RequestParam @Valid String article, @RequestParam("file") MultipartFile file) {
 		System.out.println("Ligne 49 du controller de article \n" + article);
 		Article req = new Gson().fromJson(article, Article.class);
@@ -57,6 +59,7 @@ public class ArticleController {
 	}
 
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAnyAuthority('BLOGGER','ADMIN')")
 	ResponseEntity<ArticleResponse> update(@PathVariable Long id, @RequestBody @Valid ArticleRequest article){
 		Article req = modelMapper.map(article, Article.class);
 		ArticleResponse resp = modelMapper.map(articleService.update(req, id), ArticleResponse.class);
@@ -64,6 +67,7 @@ public class ArticleController {
 	}
 
 	@PutMapping(value = "/updateCover/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+	@PreAuthorize("hasAnyAuthority('BLOGGER','ADMIN')")
 	public ResponseEntity<ArticleResponse> changeCover(@PathVariable Long id, @RequestParam @Valid String article, @RequestParam("cover") MultipartFile cover){
 		Article req = new Gson().fromJson(article, Article.class);
 //		Article req = modelMapper.map(article, Article.class);
@@ -74,6 +78,7 @@ public class ArticleController {
 	}
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAnyAuthority('BLOGGER','ADMIN')")
 	ResponseEntity<?> delete(@PathVariable Long id){
 		return articleService.delete(id);
 	}

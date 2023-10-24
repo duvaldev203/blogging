@@ -28,6 +28,7 @@ public class User {
 	@NotNull(message = "Le prenom de l'utilisateur est obligatoire !!!")
 	private String lastName;
 
+	@Column(unique = true)
 	@NotNull(message = "L'email de l'utilisateur est obligatoire !!!")
 	@Email(message = "email invalide !!!")
 	private String email;
