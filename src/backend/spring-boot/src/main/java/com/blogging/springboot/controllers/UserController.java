@@ -1,5 +1,6 @@
 package com.blogging.springboot.controllers;
 
+import com.blogging.springboot.dto.PasswordRequest;
 import com.blogging.springboot.dto.ProfileResponse;
 import com.blogging.springboot.dto.UserRequest;
 import com.blogging.springboot.dto.UserResponse;
@@ -60,6 +61,12 @@ public class UserController {
 		User req = modelMapper.map(user, User.class);
 		UserResponse resp = modelMapper.map(userService.update(req, id), UserResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.ACCEPTED);
+	}
+
+	@PutMapping("/password/{id}")
+	public ResponseEntity<UserResponse> modifyPassword(@PathVariable Long id, @Valid @RequestBody PasswordRequest request){
+		UserResponse resp = modelMapper.map(userService.modifyPassword(id, request), UserResponse.class);
+		return  new ResponseEntity<>(resp, HttpStatus.ACCEPTED);
 	}
 
 	@PutMapping(value = "/profile/{id}", consumes = {"multipart/form-data"})

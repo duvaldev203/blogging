@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class RoleController {
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	ResponseEntity<RoleResponse> create(@RequestBody @Valid RoleRequest role){
 		Role req = modelMapper.map(role, Role.class);
 		RoleResponse resp = modelMapper.map(roleService.create(req), RoleResponse.class);
@@ -48,6 +50,7 @@ public class RoleController {
 	}
 
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	ResponseEntity<RoleResponse> update(@PathVariable Long id, @RequestBody @Valid RoleRequest role){
 		Role req = modelMapper.map(role, Role.class);
 		RoleResponse resp = modelMapper.map(roleService.update(req, id), RoleResponse.class);
@@ -55,6 +58,7 @@ public class RoleController {
 	}
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	ResponseEntity<?> delete(@PathVariable Long id){
 		return roleService.delete(id);
 	}

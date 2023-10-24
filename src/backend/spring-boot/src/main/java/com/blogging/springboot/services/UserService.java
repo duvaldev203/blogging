@@ -1,5 +1,6 @@
 package com.blogging.springboot.services;
 
+import com.blogging.springboot.dto.PasswordRequest;
 import com.blogging.springboot.dto.UserRequest;
 import com.blogging.springboot.dto.UserResponse;
 import com.blogging.springboot.models.User;
@@ -16,4 +17,6 @@ public interface UserService {
 	User create(User user);
 
 	User update(User user, Long id);
+
+	User modifyPassword(Long id, PasswordRequest request);
 }

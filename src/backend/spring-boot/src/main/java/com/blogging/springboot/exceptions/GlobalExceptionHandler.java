@@ -4,6 +4,7 @@ import com.blogging.springboot.shared.HandlingException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -38,6 +39,17 @@ public class GlobalExceptionHandler {
 
 		return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 	}
+
+	@ExceptionHandler(AuthenticationException.class)
+	public ResponseEntity<HandlingException> myAuthenticationException(AuthenticationException e) {
+		String message = e.getMessage();
+		Timestamp timestamp = new Timestamp(new Date().getTime());
+
+		HandlingException res = new HandlingException(timestamp, message, false);
+
+		return new ResponseEntity<>(res, HttpStatus.FORBIDDEN);
+	}
+
 	@ExceptionHandler(SizeLimitExceededException.class)
 	public ResponseEntity<HandlingException> myBADException(SizeLimitExceededException e) {
 		String message = e.getMessage();

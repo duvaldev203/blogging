@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class CategoryController {
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAuthority('BLOGGER')")
 	ResponseEntity<CategoryResponse> create(@RequestBody @Valid CategoryRequest category){
 		Category req = modelMapper.map(category, Category.class);
 		CategoryResponse resp = modelMapper.map(categoryService.create(req), CategoryResponse.class);
@@ -48,6 +50,7 @@ public class CategoryController {
 	}
 
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAuthority('BLOGGER')")
 	ResponseEntity<CategoryResponse> update(@PathVariable Long id, @RequestBody @Valid CategoryResponse category){
 		Category req = modelMapper.map(category, Category.class);
 		CategoryResponse resp = modelMapper.map(categoryService.update(req, id), CategoryResponse.class);
