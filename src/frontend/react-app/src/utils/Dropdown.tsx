@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Transition from './Transition';
 
-const Dropdown = ({
-  children,
-  title
-}) => {
+interface DropDownProps {
+  children: any,
+  title: any
+}
+
+const Dropdown: React.FC<DropDownProps> = ({children, title}) => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 

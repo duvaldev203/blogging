@@ -1,7 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 // import Modal from '../utils/Modal';
-
-import HeroImage from '../images/hero-image-01.jpg';
 
 const HeroHome:React.FC = () => {
   // const [videoModalOpen, setVideoModalOpen] = useState(false);
@@ -41,21 +40,21 @@ const HeroHome:React.FC = () => {
         <div className="relative pt-32 pb-10 md:pt-40 md:pb-16">
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-            <h1 className="h1 mb-4" data-aos="fade-up">
-              Landing template for startups
+            <h1 className="h2 mb-4" data-aos="fade-up">
+              Organisez, suivez et partagez votre contenu en un seul endroit. 
             </h1>
-            <p className="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">
-              Our landing page template works on all devices, so you only have to set it up once, and get beautiful results forever.
+            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">
+            Une application qui aide les créateurs de contenu à écrire et à éditer des articles. Il peut contribuer à augmenter vos abonnés avec des outils qui rendent vottre contenu encore plus dynamique.
             </p>
             <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
               <div data-aos="fade-up" data-aos-delay="400">
-                <a className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0" href="#0">
-                  Start free trial
-                </a>
+                <Link className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0" to="/signin">
+                  Je veux publier
+                </Link>
               </div>
               <div data-aos="fade-up" data-aos-delay="600">
-                <a className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4" href="#0">
-                  Learn more
+                <a className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4" href="/articles">
+                  Lire des articles
                 </a>
               </div>
             </div>
@@ -64,7 +63,7 @@ const HeroHome:React.FC = () => {
           {/* Hero image */}
           <div>
             <div className="relative flex justify-center items-center" data-aos="fade-up" data-aos-delay="200">
-              <img className="mx-auto" src={HeroImage} width="1024" height="504" alt="Hero" />
+              <img className="mx-auto" src='images/hero-image-01.jpg' width="1024" height="504" alt="Hero" />
               {/* <a
                 className="absolute group"
                 href="#0"
