@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Routes,
   Route,
@@ -16,6 +16,7 @@ import SignUp from './pages/SignUp';
 import ResetPassword from './pages/ResetPassword';
 
 const App = () => {
+  const [loading, setLoading] = useState<boolean>(true);
 
   const location = useLocation();
 
@@ -26,7 +27,10 @@ const App = () => {
       duration: 600,
       easing: 'ease-out-sine',
     });
+    setTimeout(() => setLoading(false), 1000)
   });
+
+
 
   useEffect(() => {
     document.querySelector('html').style.scrollBehavior = 'auto'
@@ -35,14 +39,15 @@ const App = () => {
   }, [location.pathname]); // triggered on route change
 
   return (
-    <>
+    <div className={`${loading && 'animate-pulse'}`}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
+        {/* <Route path="/signup/signin" element={<SignIn />} /> */}
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

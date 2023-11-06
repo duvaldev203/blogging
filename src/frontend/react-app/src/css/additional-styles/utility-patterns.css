@@ -34,7 +34,9 @@
 .btn {
     @apply px-8 py-3;
 }
-
+.dark-switcher {
+    @apply px-4 font-medium inline-flex items-center justify-center border border-transparent rounded-sm leading-snug transition duration-150 ease-in-out;
+}
 .btn-sm {
     @apply px-4 py-2;
 }

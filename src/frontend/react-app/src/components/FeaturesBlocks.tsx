@@ -8,8 +8,8 @@ const FeaturesBlocks:React.FC = () => {
 
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h2 className="h2 mb-4">The majority our customers do not understand their workflows.</h2>
-            <p className="text-xl text-gray-400">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <h2 className="h2 mb-4">Publier du contenu captivant pour avoir plus partage.</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400">Possibilite de partager des contenus dans les resaux sociaux, commenter et reagir sur les articles </p>
           </div>
 
           {/* Items */}
