@@ -19,6 +19,8 @@ const Switcher = () => {
 				checked={darkSide}
 				onChange={toggleDarkMode}
 				size={30}
+				moonColor="#CCC"
+				sunColor="#444"
 			/>
 		</>
 	);
