@@ -41,7 +41,7 @@ const HeroHome:React.FC = () => {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
             <h1 className="h2 mb-4" data-aos="fade-up">
-              Organisez, suivez et partagez votre contenu en un seul endroit. 
+              Organisez, commenter et partagez du contenu en un seul endroit. 
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">
             Une application qui aide les créateurs de contenu à écrire et à éditer des articles. Il peut contribuer à augmenter vos abonnés avec des outils qui rendent vottre contenu encore plus dynamique.
