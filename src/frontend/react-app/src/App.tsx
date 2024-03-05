@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import {
-  Routes,
-  Route,
   useLocation
 } from 'react-router-dom';
 
@@ -10,13 +8,28 @@ import './css/style.css';
 
 import AOS from 'aos';
 
-import Home from './pages/Home';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import ResetPassword from './pages/ResetPassword';
+import { IS_LOGGED_LOCAL_STORAGE_KEY } from './Constants/LOCAL_STORAGE';
+import { CircularProgress } from '@mui/material';
+import AppSwitch from './AppSwitch/AppSwitch';
 
 const App = () => {
   const [loading, setLoading] = useState<boolean>(true);
+  const preloader = document.getElementById('preloader');
+
+  const isLoggedIn: boolean = Boolean(localStorage.getItem(IS_LOGGED_LOCAL_STORAGE_KEY));
+
+  if (preloader) {
+    setTimeout(() => {
+      preloader.style.display = 'none';
+      setLoading(false);
+    }, 2000);
+  }
+
+
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 1000);
+  }, []);
 
   const location = useLocation();
 
@@ -33,21 +46,17 @@ const App = () => {
 
 
   useEffect(() => {
-    document.querySelector('html').style.scrollBehavior = 'auto'
+    document.querySelector('html')!.style.scrollBehavior = 'auto'
     window.scroll({ top: 0 })
-    document.querySelector('html').style.scrollBehavior = ''
+    document.querySelector('html')!.style.scrollBehavior = ''
   }, [location.pathname]); // triggered on route change
 
-  return (
-    <div className={`${loading && 'animate-pulse'}`}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signin" element={<SignIn />} />
-        {/* <Route path="/signup/signin" element={<SignIn />} /> */}
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-      </Routes>
+  return loading ? (
+    <div className="m-[20%] px-[25%]">
+      <CircularProgress className='content-center'/>
     </div>
+  ) : (
+    <AppSwitch isLoggedIn={isLoggedIn} />
   );
 }
 

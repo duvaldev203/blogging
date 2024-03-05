@@ -30,6 +30,7 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "@types/aos": "^3.0.6",
     "@types/react-slick": "^0.23.11",
     "@types/react-transition-group": "^4.4.8",
     "@vitejs/plugin-react": "^4.1.1",

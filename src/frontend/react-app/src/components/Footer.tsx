@@ -8,11 +8,11 @@ const Footer: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
           {/* Top area: Blocks */}
-          <div className="grid md:grid-cols-12 gap-8 lg:gap-20 mb-5 md:mb-8">
+          <div className="grid md:grid-cols-12 gap-8 lg:gap-20 mb-2">
 
             {/* 1st block */}
-            <div className="md:col-span-4 lg:col-span-5">
-              <div className="mb-2">
+            <div className="md:col-span-4 lg:col-span-5 inline-flex">
+              <div>
                 {/* Logo */}
                 <Link to="/" className="inline-block hover:opacity-80" aria-label="Cruip">
                   <svg className="w-10 h-10 fill-current text-purple-600" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -20,66 +20,7 @@ const Footer: React.FC = () => {
                   </svg>
                 </Link>
               </div>
-              <div className="dark:text-gray-200 text-gray-700">Publier vos articles en toute simplicite.</div>
-            </div>
-
-            {/* 2nd, 3rd and 4th blocks */}
-            <div className="md:col-span-8 lg:col-span-7 grid sm:grid-cols-3 gap-8">
-
-              {/* 2nd block */}
-              <div className="text-sm">
-                <h6 className="dark:text-gray-200 font-medium mb-1">Domaines</h6>
-                <ul>
-                  <li className="mb-1">
-                    <Link to="#" className="text-gray-700 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-100 transition duration-150 ease-in-out">Sciences</Link>
-                  </li>
-                  <li className="mb-1">
-                    <Link to="#" className="text-gray-700 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-100 transition duration-150 ease-in-out">Arts</Link>
-                  </li>
-                  <li className="mb-1">
-                    <Link to="#" className="text-gray-700 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-100 transition duration-150 ease-in-out">Autres...</Link>
-                  </li>
-                </ul>
-              </div>
-
-              {/* 3rd block */}
-              <div className="text-sm">
-                <h6 className="dark:text-gray-200 font-medium mb-1">Categorie</h6>
-                <ul>
-                  <li className="mb-1">
-                    <Link to="#" className="text-gray-700 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-100 transition duration-150 ease-in-out">Nostrud exercitation</Link>
-                  </li>
-                  <li className="mb-1">
-                    <Link to="#" className="text-gray-700 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-100 transition duration-150 ease-in-out">Visual mockups</Link>
-                  </li>
-                  <li className="mb-1">
-                    <Link to="#" className="text-gray-700 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-100 transition duration-150 ease-in-out">Nostrud exercitation</Link>
-                  </li>
-                  <li className="mb-1">
-                    <Link to="#" className="text-gray-700 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-100 transition duration-150 ease-in-out">Visual mockups</Link>
-                  </li>
-                </ul>
-              </div>
-
-              {/* 4th block */}
-              <div className="text-sm">
-                <h6 className="dark:text-gray-200 font-medium mb-1">Company</h6>
-                <ul>
-                  <li className="mb-1">
-                    <Link to="#" className="text-gray-700 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-100 transition duration-150 ease-in-out">Consectetur adipiscing</Link>
-                  </li>
-                  <li className="mb-1">
-                    <Link to="#" className="text-gray-700 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-100 transition duration-150 ease-in-out">Labore et dolore</Link>
-                  </li>
-                  <li className="mb-1">
-                    <Link to="#" className="text-gray-700 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-100 transition duration-150 ease-in-out">Consectetur adipiscing</Link>
-                  </li>
-                  <li className="mb-1">
-                    <Link to="#" className="text-gray-700 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-100 transition duration-150 ease-in-out">Labore et dolore</Link>
-                  </li>
-                </ul>
-              </div>
-
+              <div className="dark:text-gray-200 text-gray-700 px-5 pt-5">Publier vos articles en toute simplicite.</div>
             </div>
 
           </div>

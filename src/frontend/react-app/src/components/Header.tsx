@@ -2,14 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Switcher from './Switcher'
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+// import { RootState } from '../redux/store';
+import DropdownUser from '../utils/DropdownUser';
+import { IS_LOGGED_LOCAL_STORAGE_KEY } from '../Constants/LOCAL_STORAGE';
 
 const Header: React.FC = () => {
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
-  const isAuth: boolean = useSelector((state: RootState) => state.auth.isAuthenticated);
-  const user = useSelector((state: RootState) => state.auth.user);
+  const isAuth: boolean = Boolean(localStorage.getItem(IS_LOGGED_LOCAL_STORAGE_KEY));  
 
   const trigger = useRef(null);
   const mobileNav = useRef(null);
@@ -35,7 +36,7 @@ const Header: React.FC = () => {
     return () => document.removeEventListener('keydown', keyHandler);
   });
 
-  const style: string = ' hover:underline hover:underline-offset-3 font-medium text-purple-600 hover:text-gray-700 dark:hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out'
+  const style: string = ' hover:underline hover:underline-offset-4 font-medium text-purple-600 hover:text-gray-700 dark:hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out'
 
   return (
     <>
@@ -72,12 +73,10 @@ const Header: React.FC = () => {
                     <li>
                       <Link to="/signin" className={style}>Connexion</Link>
                     </li>
-                    <li>
-                      <Link to="/signup" className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3">Deconnexion</Link>
-                    </li>
                     <li className="btn-sm border" >
                       <Switcher />
                     </li>
+                    <DropdownUser />
                   </ul>
                 </nav>
 

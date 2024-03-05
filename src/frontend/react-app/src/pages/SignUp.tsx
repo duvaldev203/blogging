@@ -1,11 +1,107 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Header from '../components/Header';
 import PageIllustration from '../components/PageIllustration';
-import Banner from '../components/Banner';
+import { AuthControllerApi, RoleResponse, UserRequest } from '../generated';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReduxProps } from '../redux/configureStore';
+import { Alert, CircularProgress, Slide } from '@mui/material';
 
-const SignUp:React.FC = () => {
+const SignUp: React.FC = () => {
+  const state = useSelector((state: ReduxProps) => state);
+  const dispatch = useDispatch<any>();
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const [confirm, setConfirm] = useState('');
+  const [success, setSuccess] = useState(false);
+
+  const [error, setError] = useState(false);
+  const [errMsg, setErrMsg] = useState('');
+
+  const [formValues, setFormValues] = useState<UserRequest>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    phone: '',
+    roles: [
+      {
+        id: 2
+      }
+    ]
+  });
+  const [roles, setRoles] = useState<RoleResponse[]>([]);
+  let role: RoleResponse = {};
+
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setError(false);
+    setErrMsg('');
+    const { name, value } = e.target;
+    if (name === 'roles') {
+      const roleId: number = parseInt(value)
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        roles: [{ id: roleId }],
+      }));
+      role.id = roleId;
+      setRoles([role]);
+    } else {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        [name]: value,
+      }));
+    }
+
+  };
+
+  const handleRegister = (e: FormEvent) => {
+    // console.log('formValues', formValues)
+    // console.log("User Rules ", roles)
+    e.preventDefault();
+    const authApi = new AuthControllerApi(state.environment);
+    const apiParams: UserRequest = formValues;
+    apiParams.roles = roles;
+    console.log("apiParams", apiParams)
+    setLoading(true);
+
+    authApi.register(apiParams)
+      .then((resp) => {
+        setLoading(false)
+        setSuccess(true);
+        setTimeout(() => {
+          navigate('/signin');
+        }, 3000);
+        if (resp && resp.data) {
+          console.log(resp.data)
+        }
+      })
+      .catch((err) => {
+        setLoading(false)
+        if (err.response.status == 403) {
+          setSuccess(true);
+          setTimeout(() => {
+            navigate('/signin');
+          }, 3000);
+        }
+        if (err.response.status == 401) {
+          setError(true);
+          setErrMsg("Une erreur s'est produite veillez verifier vos champs")
+        }
+        console.log(err.response)
+      })
+      .finally(() => {
+        setLoading(false)
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3000)
+      })
+  }
+
+
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
 
@@ -19,6 +115,21 @@ const SignUp:React.FC = () => {
         <div className="relative max-w-6xl mx-auto h-0 pointer-events-none" aria-hidden="true">
           <PageIllustration />
         </div>
+        {success &&
+          <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+            <Alert
+              severity="success"
+              sx={{
+                position: "fixed",
+                bottom: 20,
+                right: 20,
+                display: "flex",
+                zIndex: 9999,
+              }}>
+              Inscription reussi!!! <br /> Vous allez etre rediriger vers la page de connexion.
+            </Alert>
+          </Slide>
+        }
 
         <section className="relative">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -39,7 +150,7 @@ const SignUp:React.FC = () => {
                           <path d="M7.9 7v2.4H12c-.2 1-1.2 3-4 3-2.4 0-4.3-2-4.3-4.4 0-2.4 2-4.4 4.3-4.4 1.4 0 2.3.6 2.8 1.1l1.9-1.8C11.5 1.7 9.9 1 8 1 4.1 1 1 4.1 1 8s3.1 7 7 7c4 0 6.7-2.8 6.7-6.8 0-.5 0-.8-.1-1.2H7.9z" />
                         </svg>
                         <span className="h-6 flex items-center border-r border-white border-opacity-25 mr-4" aria-hidden="true"></span>
-                        <span className="flex-auto pl-16 pr-8 -ml-16">Se connecter avec Google</span>
+                        <span className="flex-auto pl-16 pr-8 -ml-16">S'inscrire avec Google</span>
                       </button>
                     </div>
                   </div>
@@ -49,42 +160,72 @@ const SignUp:React.FC = () => {
                   <div className="dark:text-gray-400">Ou inscrivez vous par email</div>
                   <div className="border-t border-gray-700 border-dotted grow ml-3" aria-hidden="true"></div>
                 </div>
-                <form>
+                <form onSubmit={handleRegister}>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
-                      <label className="block dark:text-gray-300 text-sm font-medium mb-1" htmlFor="full-name">Full Name <span className="text-red-600">*</span></label>
-                      <input id="full-name" type="text" className="form-input w-full dark:text-gray-300" placeholder="First and last name" required />
+                      <label className="block dark:text-gray-300 text-sm font-medium mb-1" htmlFor="firstName">Nom <span className="text-red-600">*</span></label>
+                      <input type="text" id="firstName" name='firstName' value={formValues.firstName} className="form-input w-full dark:text-gray-300" placeholder="John" required onChange={handleInputChange} />
                     </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
-                      <label className="block dark:text-gray-300 text-sm font-medium mb-1" htmlFor="company-name">Company Name <span className="text-red-600">*</span></label>
-                      <input id="company-name" type="text" className="form-input w-full dark:text-gray-300" placeholder="Your company or app name" required />
+                      <label className="block dark:text-gray-300 text-sm font-medium mb-1" htmlFor="lastName">Prenom <span className="text-red-600">*</span></label>
+                      <input id="lastName" type="text" name='lastName' value={formValues.lastName} className="form-input w-full dark:text-gray-300" placeholder="Doeh" required onChange={handleInputChange} />
                     </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
-                      <label className="block dark:text-gray-300 text-sm font-medium mb-1" htmlFor="email">Work Email <span className="text-red-600">*</span></label>
-                      <input id="email" type="email" className="form-input w-full dark:text-gray-300" placeholder="you@yourcompany.com" required />
+                      <label className="block dark:text-gray-300 text-sm font-medium mb-1" htmlFor="phone">Numero de telephone <span className="text-red-600">*</span></label>
+                      <input id="phone" type="text" name='phone' value={formValues.phone} className="form-input w-full dark:text-gray-300" placeholder="+237671234567" required onChange={handleInputChange} />
                     </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
-                      <label className="block dark:text-gray-300 text-sm font-medium mb-1" htmlFor="password">Password <span className="text-red-600">*</span></label>
-                      <input id="password" type="password" className="form-input w-full dark:text-gray-300" placeholder="Password (at least 10 characters)" required />
+                      <label className="block dark:text-gray-300 text-sm font-medium mb-1" htmlFor="email">Email <span className="text-red-600">*</span></label>
+                      <input id="email" type="email" name='email' value={formValues.email} className="form-input w-full dark:text-gray-300" placeholder="exemple@exemple.com" required onChange={handleInputChange} />
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap -mx-3 mb-4">
+                    <div className="w-full px-3">
+                      <label className="block dark:text-gray-300 text-sm font-medium mb-1" htmlFor="password">Mot de passe <span className="text-red-600">*</span></label>
+                      <input id="password" type="password" name='password' value={formValues.password} className="form-input w-full dark:text-gray-300" placeholder="(au moins 8 caracteres)" required onChange={handleInputChange} />
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap -mx-3 mb-4">
+                    <div className="w-full px-3">
+                      <label className="block dark:text-gray-300 text-sm font-medium mb-1" htmlFor="confirm">Confirmer le mot de passe <span className="text-red-600">*</span></label>
+                      <input id="password" type="password" name='confirm' value={confirm} className="form-input w-full dark:text-gray-300" placeholder="(au moins 8 caracteres)" required onChange={(e) => setConfirm(e.target.value)} />
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap -mx-3 mb-4">
+                    <div className="w-full px-3">
+                      <label className="block dark:text-gray-300 text-sm font-medium mb-1" htmlFor="roles">Vous etes <span className="text-red-600">*</span></label>
+                      <select className='form-input w-full dark:text-gray-300' name='roles' onChange={handleInputChange}>
+                        <option value='2'>Membre</option>
+                        <option value='1'>Bloggeur</option>
+                      </select>
                     </div>
                   </div>
                   <div className="text-sm text-gray-500 text-center">
                     I agree to be contacted by Open PRO about this offer as per the Open PRO <Link to="#" className="underline dark:text-gray-400 hover:text-gray-200 hover:no-underline transition duration-150 ease-in-out">Privacy Policy</Link>.
-                                </div>
+                  </div>
                   <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
-                      <button className="btn text-white bg-purple-600 hover:bg-purple-700 w-full">Sign up</button>
+                      <span className='text-red-600 mb-2 px-3'>{errMsg}</span>
+                      <button
+                        className="btn text-white bg-purple-600 hover:bg-purple-700 w-full space-x-5">
+                        {loading &&
+                          <CircularProgress
+                            size={30}
+                            color='inherit'
+                            disableShrink />}
+                        <span>S'inscrire</span>
+                      </button>
                     </div>
                   </div>
                 </form>
                 <div className="text-gray-600 dark:text-gray-400 text-center mt-6">
-                  Vous avez deja un compte? <Link to="/signin" className="text-purple-600 hover:text-gray-700 dark:hover:text-gray-200 transition duration-150 ease-in-out">Sign in</Link>
+                  Vous avez deja un compte? <Link to="/signin" className="text-purple-600 hover:text-gray-700 dark:hover:text-gray-200 transition duration-150 ease-in-out">Connection</Link>
                 </div>
               </div>
 
@@ -94,7 +235,7 @@ const SignUp:React.FC = () => {
 
       </main>
 
-      <Banner />
+      {/* <Banner /> */}
 
     </div>
   );
