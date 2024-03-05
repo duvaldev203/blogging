@@ -1,19 +1,16 @@
 import React from 'react';
 
-import FeatImage01 from '../images/features-03-image-01.png';
-import FeatImage02 from '../images/features-03-image-02.png';
-import FeatImage03 from '../images/features-03-image-03.png';
 import Card from './carousel/Card';
-import SliderArticles from './carousel/Slider';
+// import SliderArticles from './carousel/Slider';
 import { FormControl, NativeSelect } from '@mui/material';
-
-const slides = [FeatImage01, FeatImage02, FeatImage03]
+import { Link } from 'react-router-dom';
+import { Plus } from 'react-feather';
 
 const FeaturesZigzag: React.FC = () => {
   return (
     <section>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="py-5 md:py-10 border-t border-gray-700">
+      <div className="mx-5 ">
+        <div className="py-5 md:py-10 border-t border-gray-700 text-center">
 
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
@@ -33,16 +30,18 @@ const FeaturesZigzag: React.FC = () => {
                 </NativeSelect>
               </FormControl>
             </div>
-            {/* <p className="text-xl text-gray-400">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit laborum — semper quis lectus nulla.</p> */}
-            {/* <Carousel slides={slides} /> */}
-            <div className="flex justify-between">
-              <Card />
-            </div>
-
+          </div>
+          {/* <p className="text-xl text-gray-400">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit laborum — semper quis lectus nulla.</p> */}
+          {/* <Carousel slides={slides} /> */}
+          <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6 space-x-5 items-center">
+            <Card />
+            <Card />
+            <Card />
           </div>
 
-          {/* Items */}
 
+          {/* More Items */}
+          <Link to='/articles' className="mt-5 inline-flex rounded-full px-3 py-1 text-base font-semibold mr-2 mb-2 text-cyan-600 hover:text-gray-700 dark:hover:text-gray-200"><Plus /><p className='mt-0.5 ml-1'> Afficher plus...</p></Link>
 
         </div>
       </div>
