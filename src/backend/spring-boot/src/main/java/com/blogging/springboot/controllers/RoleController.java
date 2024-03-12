@@ -38,7 +38,7 @@ public class RoleController {
 	@GetMapping("/{id}")
 	ResponseEntity<RoleResponse> show(@PathVariable Long id){
 		RoleResponse role = modelMapper.map(roleService.show(id), RoleResponse.class);
-		return new ResponseEntity<>(role, HttpStatus.FOUND);
+		return new ResponseEntity<>(role, HttpStatus.OK);
 	}
 
 	@PostMapping

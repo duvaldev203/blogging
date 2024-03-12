@@ -1,18 +1,18 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import Header from '../components/Header';
-import PageIllustration from '../components/PageIllustration';
-import Banner from '../components/Banner';
+import Header from '../../components/Header';
+import PageIllustration from '../../components/PageIllustration';
+import Banner from '../../components/Banner';
 import { Eye, EyeOff, Mail } from 'react-feather';
 import { connect, useDispatch, useSelector } from 'react-redux';
 // import { login } from '../redux/actions/authActions';
 import { CircularProgress } from '@mui/material';
-import { ReduxProps } from '../redux/configureStore';
-import { AuthControllerApi, SignInRequest, UserResponse } from '../generated';
-import { IS_LOGGED_LOCAL_STORAGE_KEY, TOKEN_LOCAL_STORAGE_KEY, USER_LOCAL_STORAGE_KEY } from '../Constants/LOCAL_STORAGE';
-import { setTokenAction } from '../redux/Actions/TokenAction';
-import { setIsLOggedAction } from '../redux/Actions/LoggedInAction';
+import { ReduxProps } from '../../redux/configureStore';
+import { AuthControllerApi, SignInRequest, UserResponse } from '../../generated';
+import { IS_LOGGED_LOCAL_STORAGE_KEY, TOKEN_LOCAL_STORAGE_KEY, USER_LOCAL_STORAGE_KEY } from '../../Constants/LOCAL_STORAGE';
+import { setTokenAction } from '../../redux/Actions/TokenAction';
+import { setIsLOggedAction } from '../../redux/Actions/LoggedInAction';
 
 interface SignInProps { }
 

@@ -4,11 +4,12 @@ import { createStore, combineReducers } from "redux";
 import EnvironmentReducer from "./Reducers/EnvironmentReducer";
 import IsLOggedReducer from "./Reducers/IsLOggedReducer";
 import UserReducer from "./Reducers/UserReducer";
-import { ConfigurationParameters } from "../generated";
+import { ArticleResponse, ConfigurationParameters } from "../generated";
 import TokenReducer from "./Reducers/TokenReducer";
 
 
 export interface ReduxProps {
+    article?: ArticleResponse; 
     user?: any;
     environment?: ConfigurationParameters,
     loggedIn?: boolean;

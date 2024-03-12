@@ -43,7 +43,7 @@ public class ArticleController {
 	@GetMapping("/{id}")
 	ResponseEntity<ArticleResponse> show(@PathVariable Long id){
 		ArticleResponse article = modelMapper.map(articleService.show(id), ArticleResponse.class);
-		return new ResponseEntity<>(article, HttpStatus.FOUND);
+		return new ResponseEntity<>(article, HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})

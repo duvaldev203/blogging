@@ -37,7 +37,7 @@ public class ReactionController {
 	@GetMapping("/{id}")
 	ResponseEntity<ReactionResponse> show(@PathVariable Long id){
 		ReactionResponse reaction = modelMapper.map(reactionService.show(id), ReactionResponse.class);
-		return new ResponseEntity<>(reaction, HttpStatus.FOUND);
+		return new ResponseEntity<>(reaction, HttpStatus.OK);
 	}
 
 	@PostMapping

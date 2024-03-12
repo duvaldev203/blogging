@@ -33,10 +33,10 @@ const FeaturesZigzag: React.FC = () => {
           </div>
           {/* <p className="text-xl text-gray-400">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit laborum — semper quis lectus nulla.</p> */}
           {/* <Carousel slides={slides} /> */}
-          <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6 space-x-5 items-center">
-            <Card />
-            <Card />
-            <Card />
+          <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-6 space-x-5 items-center justify-center justify-items-center">
+            <Card style='max-lg:max-w-2xl'/>
+            <Card style='max-lg:max-w-2xl'/>
+            <Card style='max-lg:max-w-2xl'/>
           </div>
 
 
