@@ -45,7 +45,7 @@ public class UserController {
 	@GetMapping("/{id}")
 	ResponseEntity<UserResponse> show(@PathVariable Long id){
 		UserResponse user = modelMapper.map(userService.show(id), UserResponse.class);
-		return new ResponseEntity<>(user, HttpStatus.FOUND);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
 	@PostMapping

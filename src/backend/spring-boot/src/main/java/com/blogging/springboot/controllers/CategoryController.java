@@ -38,7 +38,7 @@ public class CategoryController {
 	@GetMapping("/{id}")
 	ResponseEntity<CategoryResponse> show(@PathVariable Long id){
 		CategoryResponse category = modelMapper.map(categoryService.show(id), CategoryResponse.class);
-		return new ResponseEntity<>(category, HttpStatus.FOUND);
+		return new ResponseEntity<>(category, HttpStatus.OK);
 	}
 
 	@PostMapping

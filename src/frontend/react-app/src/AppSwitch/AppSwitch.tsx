@@ -5,10 +5,12 @@ import NotFound from "./NotFound"
 
 import { connect, useSelector } from 'react-redux';
 import { ReduxProps } from '../redux/configureStore';
-import SignIn from '../pages/SignIn';
+import SignIn from '../pages/Auth/SignIn';
 import Home from '../pages/Home';
-import SignUp from '../pages/SignUp';
+import SignUp from '../pages/Auth/SignUp';
 import ResetPassword from '../pages/ResetPassword';
+import Articles from '../pages/Articles/Articles';
+import DisplayArticle from '../pages/Articles/DisplayArticle';
 
 interface AppSwitchProps {
   isLoggedIn: boolean;
@@ -31,8 +33,10 @@ const AppSwitch: React.FC<AppSwitchProps> = (props) => {
     return (
       <Routes>
         <Route index element={<Home />} />
+        <Route path="/articles" element={<Articles />} />
         <Route path="/signin" element={<Navigate to={'/'} />} />
         <Route path="/signup" element={<Navigate to={'/'} />} />
+        <Route path="/article/:id" element={<DisplayArticle />} />
         <Route path="*" element={<NotFound />} />
 
       </Routes>
@@ -45,6 +49,8 @@ const AppSwitch: React.FC<AppSwitchProps> = (props) => {
         {/* <Route path="/signup/signin" element={<SignIn />} /> */}
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/article/:id" element={<DisplayArticle />} />
+        <Route path="/articles" element={<Articles />} />
         <Route path="*" element={<NotFound />} />
 
       </Routes>
@@ -54,6 +60,7 @@ const AppSwitch: React.FC<AppSwitchProps> = (props) => {
 
 function mapStateToProps(state: ReduxProps): ReduxProps {
   return {
+    article: state.article, 
     user: state.user,
     environment: state.environment,
     loggedIn: state.loggedIn,

@@ -37,7 +37,7 @@ public class CommentController {
 	@GetMapping("/{id}")
 	ResponseEntity<CommentResponse> show(@PathVariable Long id){
 		CommentResponse comment = modelMapper.map(commentService.show(id), CommentResponse.class);
-		return new ResponseEntity<>(comment, HttpStatus.FOUND);
+		return new ResponseEntity<>(comment, HttpStatus.OK);
 	}
 
 	@PostMapping

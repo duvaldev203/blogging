@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Switcher from './Switcher'
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 // import { RootState } from '../redux/store';
 import DropdownUser from '../utils/DropdownUser';
 import { IS_LOGGED_LOCAL_STORAGE_KEY } from '../Constants/LOCAL_STORAGE';
@@ -10,31 +10,37 @@ const Header: React.FC = () => {
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
-  const isAuth: boolean = Boolean(localStorage.getItem(IS_LOGGED_LOCAL_STORAGE_KEY));  
+  const [isAuth, setIsAuth] = useState(false);
 
-  const trigger = useRef(null);
-  const mobileNav = useRef(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const mobileNav = useRef<null | HTMLElement>(null);
 
-  // close the mobile menu on click outside
+  // Close the mobile menu on click outside
   useEffect(() => {
-    const clickHandler = ({ target }: any) => {
+    // console.log("Header UseEffect");
+    setIsAuth(JSON.parse(localStorage.getItem(IS_LOGGED_LOCAL_STORAGE_KEY)!))
+    // console.log(isAuth)
+
+    const clickHandler = ({ target }: MouseEvent) => {
       if (!mobileNav.current || !trigger.current) return;
-      if (!mobileNavOpen || mobileNav.current.contains(target) || trigger.current.contains(target)) return;
+      if (!mobileNavOpen || mobileNav.current.contains(target as Node) || trigger.current.contains(target as Node)) return;
       setMobileNavOpen(false);
     };
+
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
-  });
+  }, [isAuth, setIsAuth]);
 
   // close the mobile menu if the esc key is pressed
   useEffect(() => {
-    const keyHandler = ({ keyCode }) => {
-      if (!mobileNavOpen || keyCode !== 27) return;
+    const keyHandler = (event: KeyboardEvent) => {
+      if (!mobileNavOpen || event.keyCode !== 27) return;
       setMobileNavOpen(false);
     };
+
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
-  });
+  }, [mobileNavOpen, setMobileNavOpen]);
 
   const style: string = ' hover:underline hover:underline-offset-4 font-medium text-purple-600 hover:text-gray-700 dark:hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out'
 
@@ -65,7 +71,7 @@ const Header: React.FC = () => {
                       <Link to="/" className={style}>Accueil</Link>
                     </li>
                     <li>
-                      <Link to="/signin" className={style}>Articles</Link>
+                      <Link to="/articles" className={style}>Articles</Link>
                     </li>
                     <li>
                       <Link to="/signin" className={style}>Connexion</Link>
@@ -100,7 +106,7 @@ const Header: React.FC = () => {
                   </button>
 
                   {/*Mobile navigation */}
-                  <nav id="mobile-nav" ref={mobileNav} className="absolute top-full z-20 left-0 w-full px-4 sm:px-6 overflow-hidden transition-all duration-300 ease-in-out" style={mobileNavOpen ? { maxHeight: mobileNav.current.scrollHeight, opacity: 1 } : { maxHeight: 0, opacity: .8 }}>
+                  <nav id="mobile-nav" ref={mobileNav} className="absolute top-full z-20 left-0 w-full px-4 sm:px-6 overflow-hidden transition-all duration-300 ease-in-out" style={mobileNavOpen ? { maxHeight: mobileNav.current!.scrollHeight, opacity: 1 } : { maxHeight: 0, opacity: .8 }}>
                     <ul className="bg-gray-800 px-4 py-2">
                       <li>
                         <Link to="/signin" className="flex font-medium w-full text-purple-600 hover:text-gray-200 py-2 justify-center">Connexion</Link>
@@ -140,7 +146,7 @@ const Header: React.FC = () => {
                       <Link to="/" className={style}>Accueil</Link>
                     </li>
                     <li>
-                      <Link to="/signin" className={style}>Articles</Link>
+                      <Link to="/articles" className={style}>Articles</Link>
                     </li>
                     <li>
                       <Link to="/signin" className={style}>Connexion</Link>
@@ -176,7 +182,7 @@ const Header: React.FC = () => {
                   </button>
 
                   {/*Mobile navigation */}
-                  <nav id="mobile-nav" ref={mobileNav} className="absolute top-full z-20 left-0 w-full px-4 sm:px-6 overflow-hidden transition-all duration-300 ease-in-out" style={mobileNavOpen ? { maxHeight: mobileNav.current.scrollHeight, opacity: 1 } : { maxHeight: 0, opacity: .8 }}>
+                  <nav id="mobile-nav" ref={mobileNav} className="absolute top-full z-20 left-0 w-full px-4 sm:px-6 overflow-hidden transition-all duration-300 ease-in-out" style={mobileNavOpen ? { maxHeight: mobileNav.current!.scrollHeight, opacity: 1 } : { maxHeight: 0, opacity: .8 }}>
                     <ul className="bg-gray-800 px-4 py-2">
                       <li>
                         <Link to="/signin" className="flex font-medium w-full text-purple-600 hover:text-gray-200 py-2 justify-center">Connexion</Link>

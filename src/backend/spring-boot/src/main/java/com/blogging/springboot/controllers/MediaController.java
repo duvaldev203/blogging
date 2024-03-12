@@ -44,7 +44,7 @@ public class MediaController {
 	@PreAuthorize("hasAuthority('BLOGGER')")
 	ResponseEntity<MediaResponse> show(@PathVariable Long id){
 		MediaResponse media = modelMapper.map(mediaService.show(id), MediaResponse.class);
-		return new ResponseEntity<>(media, HttpStatus.FOUND);
+		return new ResponseEntity<>(media, HttpStatus.OK);
 	}
 
 	@PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})

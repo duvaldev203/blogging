@@ -1,11 +1,11 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import Header from '../components/Header';
-import PageIllustration from '../components/PageIllustration';
-import { AuthControllerApi, RoleResponse, UserRequest } from '../generated';
+import Header from '../../components/Header';
+import PageIllustration from '../../components/PageIllustration';
+import { AuthControllerApi, RoleResponse, UserRequest } from '../../generated';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReduxProps } from '../redux/configureStore';
+import { ReduxProps } from '../../redux/configureStore';
 import { Alert, CircularProgress, Slide } from '@mui/material';
 
 const SignUp: React.FC = () => {

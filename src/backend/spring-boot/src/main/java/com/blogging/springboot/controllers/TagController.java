@@ -40,7 +40,7 @@ public class TagController {
 	@PreAuthorize("hasAnyAuthority('BLOGGER','ADMIN')")
 	ResponseEntity<TagResponse> show(@PathVariable Long id){
 		TagResponse tag = modelMapper.map(tagService.show(id), TagResponse.class);
-		return new ResponseEntity<>(tag, HttpStatus.FOUND);
+		return new ResponseEntity<>(tag, HttpStatus.OK);
 	}
 
 	@PostMapping
