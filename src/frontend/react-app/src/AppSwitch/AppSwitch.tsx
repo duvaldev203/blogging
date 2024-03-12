@@ -37,6 +37,7 @@ const AppSwitch: React.FC<AppSwitchProps> = (props) => {
         <Route path="/signin" element={<Navigate to={'/'} />} />
         <Route path="/signup" element={<Navigate to={'/'} />} />
         <Route path="/article/:id" element={<DisplayArticle />} />
+        <Route path="/post-article" element={<Articles />} />
         <Route path="*" element={<NotFound />} />
 
       </Routes>
@@ -50,6 +51,7 @@ const AppSwitch: React.FC<AppSwitchProps> = (props) => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/article/:id" element={<DisplayArticle />} />
+        <Route path="/post-article" element={<Navigate to='/signin' />} />
         <Route path="/articles" element={<Articles />} />
         <Route path="*" element={<NotFound />} />
 

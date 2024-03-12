@@ -67,7 +67,7 @@ const DisplayArticle: React.FC = () => {
           </div>
           <div className="my-4 flex w-full">
             {/*-- Reseaux Sociaux --*/}
-            <ShareArticle />
+            <ShareArticle article={article} />
 
             {/*-- Contenu du post --*/}
             <div className="mx-auto px-4 pb-10">

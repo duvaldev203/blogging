@@ -74,7 +74,7 @@ const Header: React.FC = () => {
                       <Link to="/articles" className={style}>Articles</Link>
                     </li>
                     <li>
-                      <Link to="/signin" className={style}>Connexion</Link>
+                      <Link to="/post-article" className={style}>Poster</Link>
                     </li>
                     <li>
                       <Link to="/signin" className={style}>Connexion</Link>
@@ -149,7 +149,8 @@ const Header: React.FC = () => {
                       <Link to="/articles" className={style}>Articles</Link>
                     </li>
                     <li>
-                      <Link to="/signin" className={style}>Connexion</Link>
+                      <Link to="/post-article" className={style}>Poster</Link>
+                      {/* <Link to="/signin" className={style}>Connexion</Link> */}
                     </li>
                     <li>
                       <Link to="/signin" className={style}>Connexion</Link>
