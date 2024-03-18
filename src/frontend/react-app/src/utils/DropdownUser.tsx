@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux'
 import { IS_LOGGED_LOCAL_STORAGE_KEY, TOKEN_LOCAL_STORAGE_KEY, USER_LOCAL_STORAGE_KEY } from '../Constants/LOCAL_STORAGE';
 
 import { UserResponse } from '../generated';
-import DefaultPicture from '../images/default/default.png';
 
 import { BASE_PATH } from '../generated/base';
 // import { RootState } from '../redux/store';
@@ -33,7 +32,7 @@ const DropdownUser = () => {
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
-  const user: UserResponse = JSON.parse(localStorage.getItem(USER_LOCAL_STORAGE_KEY)!);  
+  const user: UserResponse = JSON.parse(localStorage.getItem(USER_LOCAL_STORAGE_KEY)!);
 
   // close on click outside
   useEffect(() => {
@@ -76,10 +75,10 @@ const DropdownUser = () => {
           <span className="block text-xs">{user.email}</span>
         </span> */}
         {user &&
-        <span className="h-12 w-12 rounded-full justify-center text-center">
-          {user.profile ? <img className='h-12 rounded-full justify-center text-center' src={BASE_PATH + '/users/profile/' + user.profile?.id} alt="User Profile" /> : 
-          <img className='h-12 rounded-full justify-center text-center' src={DefaultPicture} alt="User Profile" />}
-        </span>}
+          <span className="h-12 w-12 rounded-full justify-center text-center">
+            {user.profile ? <img className='h-12 rounded-full justify-center text-center bg-cover object-cover' src={BASE_PATH + '/users/profile/' + user.profile?.id} alt="User Profile" /> :
+              <img className='h-12 rounded-full justify-center text-center' src={"/images/default.png"} alt="User Profile" />}
+          </span>}
 
         <svg
           className={`hidden fill-current sm:block ${dropdownOpen ? 'rotate-180' : ''

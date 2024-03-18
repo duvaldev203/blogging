@@ -6,7 +6,9 @@ import com.blogging.springboot.dto.ArticleRequest;
 import com.blogging.springboot.dto.ArticleResponse;
 import com.blogging.springboot.models.Article;
 import com.blogging.springboot.services.ArticleService;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +50,14 @@ public class ArticleController {
 
 	@PostMapping(value = "/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
 	@PreAuthorize("hasAnyAuthority('ADMIN','BLOGGER')")
-	ResponseEntity<ArticleResponse> create(@RequestParam @Valid String article, @RequestParam("file") MultipartFile file) {
-		System.out.println("Ligne 49 du controller de article \n" + article);
-		Article req = new Gson().fromJson(article, Article.class);
-//		Article req = modelMapper.map(article, Article.class);
+	ResponseEntity<ArticleResponse> create(@RequestParam @Valid String article, @RequestParam("file") MultipartFile file) throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		System.out.println("Controller de article \n" + article);
+//		Article req = new Gson().fromJson(article, Article.class);
+		JsonObject json = new JsonObject();
+		System.out.println("Valeur: " + json.getAsJsonObject(article));
+//		Article req = gson.fromJson(gson.toJson(json), Article.class);
+		Article req = mapper.readValue(article, Article.class);
 		req.setCover(AppFunctions.copyImgToPath(file, AppConstants.DEFAULT_ARTICLES_PATH));
 		System.out.println(req);
 		ArticleResponse resp = modelMapper.map(articleService.create(req), ArticleResponse.class);
@@ -68,8 +74,8 @@ public class ArticleController {
 
 	@PutMapping(value = "/updateCover/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
 	@PreAuthorize("hasAnyAuthority('BLOGGER','ADMIN')")
-	public ResponseEntity<ArticleResponse> changeCover(@PathVariable Long id, @RequestParam @Valid String article, @RequestParam("cover") MultipartFile cover){
-		Article req = new Gson().fromJson(article, Article.class);
+	public ResponseEntity<ArticleResponse> changeCover(@PathVariable Long id, @RequestParam @Valid String article, @RequestParam("cover") MultipartFile cover) throws JsonProcessingException {
+		Article req = new ObjectMapper().readValue(article, Article.class);
 //		Article req = modelMapper.map(article, Article.class);
 		req.setCover(AppFunctions.copyImgToPath(cover, AppConstants.DEFAULT_ARTICLES_PATH));
 		System.out.println(req);

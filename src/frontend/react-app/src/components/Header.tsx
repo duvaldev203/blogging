@@ -5,8 +5,10 @@ import Switcher from './Switcher'
 // import { RootState } from '../redux/store';
 import DropdownUser from '../utils/DropdownUser';
 import { IS_LOGGED_LOCAL_STORAGE_KEY } from '../Constants/LOCAL_STORAGE';
+import CreatePost from '../pages/Editor/CreatePost';
 
 const Header: React.FC = () => {
+  const [showCreatePost, setShowCreatePost] = useState<boolean>(false);
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
@@ -46,6 +48,7 @@ const Header: React.FC = () => {
 
   return (
     <>
+      {showCreatePost && <CreatePost onClose={() => setShowCreatePost(false)} />}
       {
         isAuth ? (
           <header className="absolute w-full z-30 bg-slate-500 bg-opacity-5 scroll-smooth">
@@ -74,7 +77,7 @@ const Header: React.FC = () => {
                       <Link to="/articles" className={style}>Articles</Link>
                     </li>
                     <li>
-                      <Link to="/post-article" className={style}>Poster</Link>
+                      <button className={style} onClick={() => { setShowCreatePost(true) }}>Poster</button>
                     </li>
                     <li>
                       <Link to="/signin" className={style}>Connexion</Link>
@@ -148,10 +151,10 @@ const Header: React.FC = () => {
                     <li>
                       <Link to="/articles" className={style}>Articles</Link>
                     </li>
-                    <li>
-                      <Link to="/post-article" className={style}>Poster</Link>
+                    {/* <li>
+                      <button onClick={() => { setShowCreatePost(true) }} className={style}>Poster</button>
                       {/* <Link to="/signin" className={style}>Connexion</Link> */}
-                    </li>
+                    {/*</li> */}
                     <li>
                       <Link to="/signin" className={style}>Connexion</Link>
                     </li>
@@ -198,7 +201,7 @@ const Header: React.FC = () => {
 
               </div>
             </div>
-          </header>
+          </header >
         )}
     </>
   );

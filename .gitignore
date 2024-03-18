@@ -3,3 +3,4 @@ src/frontend/react-app/package-lock.json
 .vscode/settings.json
 hs_err_pid47555.log
 replay_pid47555.log
+src/frontend/react-app/src/pages/Editor/TInyAPI.ts
