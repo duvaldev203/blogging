@@ -8,10 +8,10 @@ const Footer: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
           {/* Top area: Blocks */}
-          <div className="grid md:grid-cols-12 gap-8 lg:gap-20 mb-2">
+          <div className="grid gap-8 lg:gap-20 mb-2">
 
             {/* 1st block */}
-            <div className="md:col-span-4 lg:col-span-5 inline-flex">
+            <div className="md:col-span-4 lg:col-span-5 inline-flex w-full">
               <div>
                 {/* Logo */}
                 <Link to="/" className="inline-block hover:opacity-80" aria-label="Cruip">
@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
                   </svg>
                 </Link>
               </div>
-              <div className="dark:text-gray-200 text-gray-700 px-5 pt-5">Publier vos articles en toute simplicite.</div>
+              <div className="dark:text-gray-200 text-gray-700 px-5 pt-5 w-full">Publier vos articles en toute simplicite.</div>
             </div>
 
           </div>

@@ -23,27 +23,27 @@ public class CategoryController {
 	private final CategoryService categoryService;
 
 	@Autowired
-	public CategoryController (ModelMapper modelMapper, CategoryService categoryService){
+	public CategoryController(ModelMapper modelMapper, CategoryService categoryService) {
 		this.modelMapper = modelMapper;
 		this.categoryService = categoryService;
 	}
 
 	@GetMapping
-	ResponseEntity<List<CategoryResponse>> index(){
+	ResponseEntity<List<CategoryResponse>> index() {
 		List<CategoryResponse> categories = categoryService.index().stream().map(
-						el -> modelMapper.map(el, CategoryResponse.class)).toList();
+				el -> modelMapper.map(el, CategoryResponse.class)).toList();
 		return new ResponseEntity<>(categories, HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	ResponseEntity<CategoryResponse> show(@PathVariable Long id){
+	ResponseEntity<CategoryResponse> show(@PathVariable Long id) {
 		CategoryResponse category = modelMapper.map(categoryService.show(id), CategoryResponse.class);
 		return new ResponseEntity<>(category, HttpStatus.OK);
 	}
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('BLOGGER')")
-	ResponseEntity<CategoryResponse> create(@RequestBody @Valid CategoryRequest category){
+	ResponseEntity<CategoryResponse> create(@RequestBody @Valid CategoryRequest category) {
 		Category req = modelMapper.map(category, Category.class);
 		CategoryResponse resp = modelMapper.map(categoryService.create(req), CategoryResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.CREATED);
@@ -51,9 +51,16 @@ public class CategoryController {
 
 	@PutMapping("/{id}")
 	@PreAuthorize("hasAuthority('BLOGGER')")
-	ResponseEntity<CategoryResponse> update(@PathVariable Long id, @RequestBody @Valid CategoryResponse category){
+	ResponseEntity<CategoryResponse> update(@PathVariable Long id, @RequestBody @Valid CategoryResponse category) {
 		Category req = modelMapper.map(category, Category.class);
 		CategoryResponse resp = modelMapper.map(categoryService.update(req, id), CategoryResponse.class);
 		return new ResponseEntity<>(resp, HttpStatus.ACCEPTED);
+	}
+
+	@GetMapping("/records/{keywords}")
+	public ResponseEntity<List<CategoryResponse>> records(@PathVariable String keywords) {
+		List<Category> articles = categoryService.records(keywords);
+		List<CategoryResponse> resp = articles.stream().map(el -> modelMapper.map(el, CategoryResponse.class)).toList();
+		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 }

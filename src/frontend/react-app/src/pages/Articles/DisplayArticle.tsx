@@ -1,4 +1,4 @@
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import PageIllustration from "../../components/PageIllustration";
@@ -62,7 +62,7 @@ const DisplayArticle: React.FC = () => {
         </div>
         <div className="mx-auto px-2 pt-20">
           <div className="relative h-80 overflow-hidden bg-indigo-900 bg-opacity-50">
-        {article.cover ? <img src={BASE_PATH + "/articles/getCover/" + article.id} alt="" className="w-full h-full rounded-2xl object-cover" /> : <img className="w-full h-full rounded-2xl object-cover" src="images/landscape/1536016414.svg" alt="Sunset in the mountains" />}
+            {article.cover ? <img src={BASE_PATH + "/articles/getCover/" + article.id} alt="" className="w-full h-full rounded-2xl object-cover" /> : <img className="w-full h-full rounded-2xl object-cover" src="images/landscape/1536016414.svg" alt="Sunset in the mountains" />}
             {/* <img src='/images/landscape/1536016414.svg' className="absolute object-fill object-bottom w-full bg-opacity-50" alt="landscape 5.svg" /> */}
           </div>
           <div className="my-4 flex w-full">
@@ -116,9 +116,7 @@ const DisplayArticle: React.FC = () => {
                 <p className="text-3xl">{article.title}</p>
 
                 {/* Corps du post */}
-                <div className="container">
-                  <span>{article.content}</span>
-                </div>
+                {article.content && <div className="container" dangerouslySetInnerHTML={{ __html: article.content }} />}
 
                 {/* Media s'il y en a */}
                 <div className="post-images grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

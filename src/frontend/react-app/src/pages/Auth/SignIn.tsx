@@ -50,14 +50,14 @@ const SignIn: React.FC<SignInProps> = () => {
       localStorage.setItem(USER_LOCAL_STORAGE_KEY, JSON.stringify(store_user));
       localStorage.setItem(IS_LOGGED_LOCAL_STORAGE_KEY, '' + isLoggedIn);
       dispatch(setTokenAction(access_token));
-      dispatch(setIsLOggedAction(true)); 
+      dispatch(setIsLOggedAction(true));
       console.log("IS Log in UseEffect");
     }
   }, [isLoggedIn, dispatch]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    
+
     // setError("");
 
     const authApi = new AuthControllerApi(state.environment);
@@ -198,9 +198,9 @@ const SignIn: React.FC<SignInProps> = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-wrap -mx-3 mt-5">
+                  <div className="flex flex-wrap -mx-3">
                     <div className="w-full px-3">
-                      <span className='text-red-600 mb-2 px-3'>{error}</span>
+                      <span className='text-red-600 mb-2 px-3 text-sm'>{error}</span>
                       <button
                         className={`btn text-white bg-purple-600 hover:bg-purple-700 w-full space-x-5 ${isError && 'cursor-not-allowed hover:bg-gray-400'}`}
                         type='submit'>
@@ -232,11 +232,11 @@ const SignIn: React.FC<SignInProps> = () => {
 }
 
 function mapStateToProps(state: ReduxProps): ReduxProps {
-  return { 
+  return {
     user: state.user,
     environment: state.environment,
     loggedIn: state.loggedIn,
     access_token: state.access_token,
   };
-} 
+}
 export default connect(mapStateToProps)(SignIn)
