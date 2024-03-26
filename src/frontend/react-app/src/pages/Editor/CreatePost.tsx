@@ -1,23 +1,44 @@
 import { Editor } from "@tinymce/tinymce-react"
 import { ApiKey } from "./TInyAPI"
-import { useCallback, useEffect, useState } from "react";
 import { X } from 'react-feather'
-import { UserResponse } from "../../generated";
-import { TOKEN_LOCAL_STORAGE_KEY, USER_LOCAL_STORAGE_KEY } from "../../Constants/LOCAL_STORAGE";
+import { useEffect, useState } from "react"
+import { MediaControllerApi, MediaResponse, UserResponse } from "../../generated"
+import { ReduxProps } from "../../redux/configureStore"
+import { TOKEN_LOCAL_STORAGE_KEY } from "../../Constants/LOCAL_STORAGE"
+import { useSelector } from "react-redux"
+import MediaItem from "../../components/Media/MediaItem"
 
 interface CreatePostProps {
     onEditEvent: (value: string) => void,
     onClose: () => void,
     title: string,
     content?: string,
+    user: UserResponse,
 }
 
 const CreatePost: React.FC<CreatePostProps> = (props) => {
+    const token: string = localStorage.getItem(TOKEN_LOCAL_STORAGE_KEY)!;
+    const state = useSelector((state: ReduxProps) => state);
+    const [medias, setMedias] = useState<MediaResponse[]>([]);
     // const [data, setData] = useState<string>('');
 
     // const handleChangeEditor = useCallback((value: string) => {
     //     setData(JSON.stringify(value));
     // }, [setData])
+
+    useEffect(() => {
+        const mediaApi = new MediaControllerApi({ ...state.environment, accessToken: token })
+        mediaApi.index4()
+            .then((response) => {
+                if (response && response.data) {
+                    setMedias(response.data);
+                }
+            }).catch((error) => {
+                console.log(error);
+            }).finally(() => {
+                // setLoading(false);    
+            })
+    }, []);
 
     return (
         <>
@@ -47,30 +68,6 @@ const CreatePost: React.FC<CreatePostProps> = (props) => {
                                 tinycomments_mode: 'embedded',
                                 tinycomments_author: 'Author name',
                                 image_title: true,
-                                file_picker_callback: (cb, value, meta) => {
-                                    const input = document.createElement('input');
-                                    input.setAttribute('type', 'file');
-                                    input.setAttribute('accept', 'image/*');
-
-                                    input.addEventListener('change', (e) => {
-                                        const file = e.target.files[0];
-
-                                        const reader = new FileReader();
-                                        reader.addEventListener('load', () => {
-                                            const id = 'blobid' + (new Date()).getTime();
-                                            const blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                                            const base64 = reader.result.split(',')[1];
-                                            const blobInfo = blobCache.create(id, file, base64);
-                                            blobCache.add(blobInfo);
-
-                                            /* call the callback and populate the Title field with the file name */
-                                            cb(blobInfo.blobUri(), { title: file.name });
-                                        });
-                                        reader.readAsDataURL(file);
-                                    });
-
-                                    input.click();
-                                },
                                 mergetags_list: [
                                     { value: 'First.Name', title: 'First Name' },
                                     { value: 'Email', title: 'Email' },
@@ -80,6 +77,9 @@ const CreatePost: React.FC<CreatePostProps> = (props) => {
                             value={props.content}
                             onEditorChange={props.onEditEvent}
                         />
+                    </div>
+                    <div className="flex">
+                        {medias && medias.map(item => <MediaItem media={item} />)}
                     </div>
                 </div>
             </section>

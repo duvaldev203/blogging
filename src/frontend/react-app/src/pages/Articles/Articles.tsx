@@ -7,13 +7,10 @@ import Card from '../../components/carousel/Card';
 import Footer from '../../components/Footer';
 import SearchBar from '../../components/SearchBar';
 import { ArticleControllerApi, ArticleResponse } from '../../generated';
-import { connect, useSelector } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useSelector } from 'react-redux';
 import { ReduxProps } from '../../redux/configureStore';
-import DisplayArticle from './DisplayArticle';
 import { Link } from 'react-router-dom';
 import { selectArticle } from '../../redux/Actions/ArticleAction';
-import { ArticlesState } from '../../redux/Reducers/ArticleReducers';
 
 const Articles: React.FC = () => {
   const state = useSelector((state: ReduxProps) => state);

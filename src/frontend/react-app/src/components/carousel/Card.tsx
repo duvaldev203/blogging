@@ -28,7 +28,7 @@ const Card: React.FC<CardProps> = (props) => {
   // const defaultTitle = "The Coldest Sunset"
   // const defaultContent = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil."
 
-const colors: string[] = getRandomColors(article.tags?.length!);
+  const colors: string[] = getRandomColors(article.tags?.length!);
 
   return (
     <div className={`relative rounded-xl max-w-sm overflow-hidden shadow-lg dark:bg-gray-800 mx-auto hover:shadow-lg transition duration-1000 hover:-translate-y-1 hover:scale-105 ease-in-out mb-5 ` + props.style}>
@@ -40,7 +40,7 @@ const colors: string[] = getRandomColors(article.tags?.length!);
           <div className="font-bold text-xl mb-2 dark:text-gray-300">{article.title}</div>
         </div>
         <p className="text-gray-700 dark:text-gray-300 text-base text-justify">
-          {article.content}
+          {article.content && <div className="container" dangerouslySetInnerHTML={{ __html: article.content }} />}
         </p>
       </div>
       {article.tags && <div className="flex px-5 space-x-2 mb-2 ">

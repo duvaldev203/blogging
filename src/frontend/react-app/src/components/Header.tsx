@@ -48,7 +48,6 @@ const Header: React.FC = () => {
 
   return (
     <>
-      {showCreatePost && <CreatePost onClose={() => setShowCreatePost(false)} />}
       {
         isAuth ? (
           <header className="absolute w-full z-30 bg-slate-500 bg-opacity-5 scroll-smooth">
