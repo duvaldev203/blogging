@@ -75,7 +75,7 @@ const DisplayArticle: React.FC = () => {
                 <div className="my-4">
                   <div className="flex mx-10">
                     <a href="#" className="relative block">
-                      <img alt="profile" src="/images/default.png" className="mx-auto object-cover rounded-full h-20 w-20 " />
+                      {article?.user?.profile ? <img className='h-20 w-20 rounded-full justify-center text-center bg-cover object-cover' src={BASE_PATH + '/users/profile/' + article.user?.profile?.id} alt="User Profile" /> : <img alt="profile" src="/images/default.png" className="mx-auto object-cover rounded-full h-20 w-20 " />}
                     </a>
                     <div className="flex flex-col justify-between ml-2">
                       <div>

@@ -6,7 +6,7 @@ import PageIllustration from '../../components/PageIllustration';
 import Footer from '../../components/Footer';
 import CreatePost from './CreatePost';
 import CustomSelectMultiTags from '../../components/CustomSelects/CustomSelectMultiTags';
-import { ArticleControllerApi, ArticleResponse, CategoryControllerApi, CategoryResponse, TagControllerApi, TagResponse, UserResponse } from '../../generated';
+import { ArticleControllerApi, ArticleRequest, ArticleResponse, CategoryControllerApi, CategoryResponse, TagControllerApi, TagResponse, UserResponse } from '../../generated';
 import { TOKEN_LOCAL_STORAGE_KEY, USER_LOCAL_STORAGE_KEY } from '../../Constants/LOCAL_STORAGE';
 import { ReduxProps } from '../../redux/configureStore';
 import { useSelector } from 'react-redux';
@@ -23,11 +23,10 @@ const EditorTMCE: React.FC<EditorProps> = (props) => {
   const state = useSelector((state: ReduxProps) => state);
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ArticleRequest>({
     title: props.article ? props.article.title : '',
     // cover: props.article ? props.article?.cover : '',
     content: props.article ? props.article.content : '',
-    totalViews: props.article ? props.article.totalViews : '',
     readingTime: props.article ? props.article.readingTime : 10,
     user: user ? user : {},
     // user: props.article ? props.article.user : {},
@@ -132,7 +131,8 @@ const EditorTMCE: React.FC<EditorProps> = (props) => {
     e.preventDefault();
     console.log("Cover", image);
     console.log("Data", JSON.stringify(formData));
-    console.log("Data with other method", " " + formData);
+    // const apiParams: string = `{ titre: ${formData.title}, content: ${formData.content}, readingTime: ${formData.readingTime}, user: ${formData.user}, category: ${formData.category}, tags: ${formData.tags},}`
+    // console.log("Data with other method", " " + apiParams);
     const artApi = new ArticleControllerApi({ ...state.environment, accessToken: token });
     artApi.create7Form(JSON.stringify(formData), image)
       .then((response) => {
@@ -149,7 +149,7 @@ const EditorTMCE: React.FC<EditorProps> = (props) => {
 
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
-      {showCreatePost && <CreatePost onClose={() => setShowCreatePost(false)} title='Contenu du post' onEditEvent={handleEditContentModal} content={formData.content} />}
+      {showCreatePost && <CreatePost onClose={() => setShowCreatePost(false)} title='Contenu du post' onEditEvent={handleEditContentModal} content={formData.content} user={user} />}
 
       {/*  Site header */}
       <Header />
