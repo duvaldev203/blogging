@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { IS_LOGGED_LOCAL_STORAGE_KEY } from '../Constants/LOCAL_STORAGE';
 // import Modal from '../utils/Modal';
 
-const HeroHome:React.FC = () => {
+const HeroHome: React.FC = () => {
   // const [videoModalOpen, setVideoModalOpen] = useState(false);
   // const video = useRef(null);
 
   // useEffect(() => {
   //   videoModalOpen ? video.current.play() : video.current.pause();
-  // }, [videoModalOpen]);    
+  // }, [videoModalOpen]);
+
+  const [isLogged, setIsLogged] = useState<boolean>(false);
+  useEffect(() => {
+    setIsLogged(JSON.parse(localStorage.getItem(IS_LOGGED_LOCAL_STORAGE_KEY)!));
+  }, [])
 
   return (
     <section>
@@ -41,14 +47,14 @@ const HeroHome:React.FC = () => {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
             <h1 className="h2 mb-4" data-aos="fade-up">
-              Organisez, commenter et partagez du contenu en un seul endroit. 
+              Organisez, commenter et partagez du contenu en un seul endroit.
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">
-            Une application qui aide les créateurs de contenu à écrire et à éditer des articles. Il peut contribuer à augmenter vos abonnés avec des outils qui rendent vottre contenu encore plus dynamique.
+              Une application qui aide les créateurs de contenu à écrire et à éditer des articles. Il peut contribuer à augmenter vos abonnés avec des outils qui rendent vottre contenu encore plus dynamique.
             </p>
             <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
               <div data-aos="fade-up" data-aos-delay="400">
-                <Link className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0" to="/signin">
+                <Link className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0" to={isLogged ? "post-article" : "/signin"}>
                   Je veux publier
                 </Link>
               </div>

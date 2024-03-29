@@ -7,7 +7,7 @@ interface SharingProps {
 }
 
 const ShareArticle: React.FC<SharingProps> = (props) => {
-    const articleUrl = 'http://localhost:5173/article/' + props.article.id
+    const articleUrl = window.location.href;
     const style = "mb-2.5 h-10 w-10 rounded-full border dark:text-slate-300 text-slate-400 border-stone-300 dark:border-stone-700 flex items-center justify-center hover:shadow-lg transition duration-1000 hover:scale-110 ease-in-out";
     return (
         <>

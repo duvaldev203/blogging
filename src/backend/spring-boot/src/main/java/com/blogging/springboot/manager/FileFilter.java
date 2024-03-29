@@ -21,6 +21,12 @@ public class FileFilter {
             case "gif":
                 contentType = "image/gif";
                 break;
+            case "mp4":
+                contentType = "video/mp4";
+                break;
+            case "webm":
+                contentType = "video/webm";
+                break;
             // Ajoutez d'autres cas pour les formats d'image supplémentaires que vous souhaitez gérer
             default:
                 throw new UnsupportedFileTypeException("Type de fichier non pris en charge : " + fileExtension);

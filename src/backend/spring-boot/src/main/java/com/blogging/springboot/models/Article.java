@@ -24,7 +24,7 @@ public class Article {
 //	@NotNull(message = "La couverture de l'article  est obligatoire !!!")
 	private String cover;
 
-	@Lob
+	@Column(columnDefinition = "TEXT")
 	@NotNull(message = "Le contenu de l'article ne doit pas etre vide !!!")
 	private String content;
 
