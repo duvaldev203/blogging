@@ -39,9 +39,9 @@ const Card: React.FC<CardProps> = (props) => {
         <div className="flex space-x-4">
           <div className="font-bold text-xl mb-2 dark:text-gray-300">{article.title}</div>
         </div>
-        <p className="text-gray-700 dark:text-gray-300 text-base text-justify">
+        {/* <p className="text-gray-700 dark:text-gray-300 text-base text-justify">
           {article.content && <div className="container" dangerouslySetInnerHTML={{ __html: article.content }} />}
-        </p>
+        </p> */}
       </div>
       {article.tags && <div className="flex px-5 space-x-2 mb-2 ">
         {article.tags.map((tag, index) => {

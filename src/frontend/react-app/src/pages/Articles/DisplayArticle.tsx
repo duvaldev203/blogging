@@ -119,11 +119,11 @@ const DisplayArticle: React.FC = () => {
                 {article.content && <div className="container" dangerouslySetInnerHTML={{ __html: article.content }} />}
 
                 {/* Media s'il y en a */}
-                <div className="post-images grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {/* <div className="post-images grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   <img src="/images/hero-image-01.jpg" alt="" className="object-cover" />
                   <img src="/images/hero-image-01.jpg" alt="" className="object-cover" />
                   <img src="/images/hero-image-01.jpg" alt="" className="object-cover" />
-                </div>
+                </div> */}
 
                 {/* A utiliser 
                 <div className="post-images grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -235,33 +235,31 @@ const EditorTMCE: React.FC<EditorProps> = (props) => {
                   <label htmlFor="content" className='text-xl font-semibold'>Contenu <span className='text-red-600'>*</span>&nbsp;&nbsp; </label>
                   <span className='hover:text-blue-600 hover:underline underline-offset-2 m-2 cursor-pointer' onClick={() => { setShowCreatePost(true) }}>Cliquer ici</span>
                 </div>
-                <div className="">
+                <div className=" lg:flex lg:space-x-2 max-lg:space-y-2 mb-2">
                   <CustomSelectCategory
                     required={true}
                     inputLabel="Category"
                     inputPlaceholder="Saisir une Categorie"
                     wrapperStyle="w-full xl:w-1/2"
-                    labelStyle="mb-2.5 block text-black dark:text-white dark:text-gray-200 text-xl font-semibold"
-                    inputStyle="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                    labelStyle="mb-2 block text-black dark:text-white dark:text-gray-200 text-xl font-semibold"
+                    inputStyle="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:focus:border-primary"
                     maxHeightList={300}
                     matchList={categories}
                     selectOptionEvent={handleOptionSelect}
                     typingInputEvent={handleTypingInput}
                   />
-                  <div className="my-2 w-full">
-                    <CustomSelectMultiTags
-                      required={true}
-                      inputLabel="Tags"
-                      inputPlaceholder="Saisir un tag"
-                      wrapperStyle="w-full xl:w-1/2"
-                      labelStyle="mb-2.5 block text-black dark:text-gray-200 text-xl font-semibold"
-                      inputStyle="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                      maxHeightList={100}
-                      selectOptionEvent={handleTagSelect}
-                      typingInputEvent={handleTypingTag}
-                      matchList={tags}
-                    />
-                  </div>
+                  <CustomSelectMultiTags
+                    required={true}
+                    inputLabel="Tags"
+                    inputPlaceholder="Saisir un tag"
+                    wrapperStyle="w-full xl:w-1/2"
+                    labelStyle="mb-2 block text-black dark:text-gray-200 text-xl font-semibold"
+                    inputStyle="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:focus:border-primary"
+                    maxHeightList={100}
+                    selectOptionEvent={handleTagSelect}
+                    typingInputEvent={handleTypingTag}
+                    matchList={tags}
+                  />
                 </div>
                 <div className="flex justify-end gap-4.5">
                   <button

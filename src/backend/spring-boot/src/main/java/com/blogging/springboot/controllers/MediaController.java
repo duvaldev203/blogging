@@ -1,5 +1,6 @@
 package com.blogging.springboot.controllers;
 
+import com.alibaba.fastjson.JSON;
 import com.blogging.springboot.configs.AppConstants;
 import com.blogging.springboot.configs.AppFunctions;
 import com.blogging.springboot.dto.MediaRequest;
@@ -49,9 +50,12 @@ public class MediaController {
 
 	@PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
 	@PreAuthorize("hasAuthority('BLOGGER')")
-	ResponseEntity<MediaResponse> create(@RequestParam @Valid String media, @RequestParam("file") MultipartFile file){
+	ResponseEntity<MediaResponse> create(@RequestParam @Valid String title, @RequestParam("file") MultipartFile file){
 //		Media req = modelMapper.map(media, Media.class);
-		Media req = new Gson().fromJson(media, Media.class);
+//		Media req = new Gson().fromJson(media, Media.class);
+		Media req = new Media();
+		req.setTitle(title);
+		req.setDescription(title);
 		req.setType(file.getContentType());
 		req.setUrl(AppFunctions.copyImgToPath(file, AppConstants.DEFAULT_MEDIAS_PATH));
 		MediaResponse resp = modelMapper.map(mediaService.create(req), MediaResponse.class);
@@ -67,7 +71,8 @@ public class MediaController {
 
 	@PutMapping(value = "/updateMedia/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
 	public ResponseEntity<MediaResponse> updateMedia(@PathVariable Long id, @RequestParam @Valid String media, @RequestParam("file") MultipartFile file){
-		Media req = new Gson().fromJson(media, Media.class);
+		Media req = JSON.parseObject(media, Media.class);
+//		Media req = new Gson().fromJson(media, Media.class);
 //		Article req = modelMapper.map(article, Article.class);
 		req.setType(file.getContentType());
 		req.setUrl(AppFunctions.copyImgToPath(file, AppConstants.DEFAULT_MEDIAS_PATH));

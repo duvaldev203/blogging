@@ -76,7 +76,7 @@ const Header: React.FC = () => {
                       <Link to="/articles" className={style}>Articles</Link>
                     </li>
                     <li>
-                      <button className={style} onClick={() => { setShowCreatePost(true) }}>Poster</button>
+                      <Link to="/post-article" className={style}>Poster</Link>
                     </li>
                     <li>
                       <Link to="/signin" className={style}>Connexion</Link>
